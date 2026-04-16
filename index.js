@@ -1,5 +1,5 @@
-const axios = require("axios");
-const { sendMessage } = require("./bot");
+import axios from "axios";
+import { sendMessage } from "./bot.js";
 
 const urls = [
   "https://unstop.com/c/amity-university-au-noida-placement-interview-competitions-articles-videos-66",
@@ -11,7 +11,7 @@ const seen = new Set();
 
 async function checkHackathons() {
   try {
-    await sendMessage("🤖 BOT STARTED & WORKING ✅");  // 👈 fires first, always
+    await sendMessage("🤖 BOT STARTED & WORKING ✅");
 
     let newFound = false;
 
@@ -35,9 +35,7 @@ async function checkHackathons() {
 
         await sendMessage(
 `🔥 NEW LIVE OPPORTUNITY!
-
 👉 ${url}
-
 ⚡ Apply Now`
         );
       }
