@@ -6,7 +6,7 @@ const CHAT_ID = process.env.CHAT_ID;
 async function sendMessage(text) {
   const res = await axios.get(
     `https://api.telegram.org/bot${TOKEN}/sendMessage`,
-    { params: { chat_id: CHAT_ID, text, parse_mode: "HTML" } }
+    { params: { chat_id: CHAT_ID, text } }
   );
   return res.data;
 }
