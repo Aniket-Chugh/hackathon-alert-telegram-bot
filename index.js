@@ -1,5 +1,5 @@
-import axios from "axios";
-import { sendMessage } from "./bot.js";
+const axios = require("axios");
+const { sendMessage } = require("./bot");
 
 const urls = [
   "https://unstop.com/c/amity-university-au-noida-placement-interview-competitions-articles-videos-66",
@@ -7,16 +7,15 @@ const urls = [
   "https://unstop.com/c/jaypee-institute-of-information-technology-jiit-noida-placement-interview-competitions-articles-videos-720"
 ];
 
-// 👇 persistent memory (per run, not perfect but ok)
-let seen = new Set();
-let firstRun = true;
+const seen = new Set();
 
 async function checkHackathons() {
   try {
+    await sendMessage("🤖 BOT STARTED & WORKING ✅");  // 👈 fires first, always
 
     let newFound = false;
 
-    for (let url of urls) {
+    for (const url of urls) {
       const res = await axios.get(url);
       const html = res.data;
 
@@ -44,19 +43,13 @@ async function checkHackathons() {
       }
     }
 
-    // 👇 FIRST RUN MESSAGE ONLY
-    if (firstRun) {
-      await sendMessage("🤖 BOT STARTED & WORKING ✅");
-      firstRun = false;
-    }
-
-    // 👇 if no new hackathons
-    if (!newFound && !firstRun) {
-      console.log("checked... no new hackathons");
+    if (!newFound) {
+      console.log("Checked... no new hackathons found.");
     }
 
   } catch (err) {
-    console.log("ERROR:", err.message);
+    console.error("ERROR:", err.response?.data || err.message);
+    process.exit(1);
   }
 }
 
